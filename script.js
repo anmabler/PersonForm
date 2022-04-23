@@ -15,20 +15,35 @@ function addPerson(){
     let age = document.getElementById("ageInput");
     let password = document.getElementById("passwordInput");
 
+    // Hämta id på felmeddelande-paragrafer
+    let nameErrorP = document.getElementById('nameError');
+    let ageErrorP = document.getElementById('ageError');
+    let passErrorP = document.getElementById('passwordError');
+
+    // Göm tidigare felmeddelanden
+    nameErrorP.setAttribute("hidden", "");
+    ageErrorP.setAttribute("hidden", "");
+    passErrorP.setAttribute("hidden", "")
+
 
     // OM password = Grit, name inte är tomt och age inte är tomt, skapa en instans av klassen Person med angivna parametrar.
     if (password.value == "Grit" && name.value != "" && age.value !=""){
         let person = new Person(name.value, age.value, password.value);
         console.log(person);
-        name.value = "";
-        age.value = "";
-    // Om inget lösenord/namn/ålder angetts, kalla på funktionen showError och skicka med id på paragrafen där felmeddelandet ska visas.
+        Person.persons.push(person)
+        showPersons();
+        // name.value = "";
+        // age.value = "";
     } 
+    // Om inget lösenord/namn/ålder angetts, kalla på funktionen showError och skicka med id på paragrafen där felmeddelandet ska visas.
     if (password.value == ""){
         showError("passwordError");
     } 
+    // Om lösenordet inte är "Grit", skriv ut ett annat felmeddelande.
     if (password.value != "Grit" && password.value.length > 0) {
-        document.getElementById("passwordError").innerText = "Wrong password";
+        passErrorP.innerText = "Wrong password";
+        passErrorP.removeAttribute("hidden");
+
     } 
     if (name.value == ""){
         showError("nameError");
@@ -37,28 +52,6 @@ function addPerson(){
         showError("ageError");
     }
 
-    // if(password.value == ""){
-    //     showError("passwordError");
-    // } else if (password.value != "Grit"){
-    //     document.getElementById("passwordError").innerText = "Wrong password";
-    // }
-    // if (name.value == ""){
-    //     showError("nameError");
-    // }
-    // if (age.value == ""){
-    //     showError("ageError");
-    // }
-    // else{
-    //     // skapa en instans av klassen Person med angivna parametrar.
-    //     let person = new Person(name.value, age.value, password.value);
-    //     console.log(person);
-    //     name.value = "";
-    //     age.value = "";
-    // }
-
-    // lägg till den nya instansen i statiska arrayen persons.
-    // Person.persons.append(person);
-
 }
 
 // Funktion för att visa felmeddelande under respektive input.
@@ -66,4 +59,11 @@ function showError(pId) {
     let errorP = document.getElementById(pId.toString());
     errorP.innerText = "Error! Missing value";
     errorP.removeAttribute("hidden");
+}
+
+function showPersons() {
+    Person.persons.forEach(person => {
+        document.getElementById('output').innerHTML = '<p>'+`${person.toString()}`+'</p>'
+        
+    });
 }
