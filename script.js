@@ -10,7 +10,7 @@ document.getElementById("form").addEventListener('submit', function(event) {
 
 
 function addPerson(){
-   
+    // Hämta id på alla input-fält
     let name = document.getElementById("nameInput");
     let age = document.getElementById("ageInput");
     let password = document.getElementById("passwordInput");
@@ -30,10 +30,10 @@ function addPerson(){
     if (password.value == "Grit" && name.value != "" && age.value !=""){
         let person = new Person(name.value, age.value, password.value);
         console.log(person);
+        // Lägg till personen i den statiska arrayen persons
         Person.persons.push(person)
+        // Kalla på showPersons-funktionen för att skriva ut information om personerna
         showPersons();
-        // name.value = "";
-        // age.value = "";
     } 
     // Om inget lösenord/namn/ålder angetts, kalla på funktionen showError och skicka med id på paragrafen där felmeddelandet ska visas.
     if (password.value == ""){
@@ -62,8 +62,23 @@ function showError(pId) {
 }
 
 function showPersons() {
+    // rensa output
+    document.getElementById('output').innerHTML = "";
+    // skriv ut personernas info.
     Person.persons.forEach(person => {
-        document.getElementById('output').innerHTML = '<p>'+`${person.toString()}`+'</p>'
+        document.getElementById('output').innerHTML += '<p>'+`${person.toString()}`+'</p>'
         
     });
+}
+
+function callBirthday(){
+    document.getElementById('output').innerHTML = "";
+    for(let person of Person.persons){
+        person.birthday();
+        document.getElementById('output').innerHTML += '<p>'+`${person.toString()}`+'</p>'
+    }
+}
+
+function callGreetings(){
+    
 }
