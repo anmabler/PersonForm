@@ -1,16 +1,13 @@
-console.log("Hello World!");
-
-let form = document.getElementById("form");
 
 document.getElementById("form").addEventListener('submit', function(event) {
+    // förhindra sänding av formuläret
     event.preventDefault();
-    console.log("submit function");
     addPerson();
 })
 
 
 function addPerson(){
-    // Hämta id på alla input-fält
+    // Hämta id på alla input-fält, spara i en variabel
     let name = document.getElementById("nameInput");
     let age = document.getElementById("ageInput");
     let password = document.getElementById("passwordInput");
@@ -29,7 +26,6 @@ function addPerson(){
     // OM password = Grit, name inte är tomt och age inte är tomt, skapa en instans av klassen Person med angivna parametrar.
     if (password.value == "Grit" && name.value != "" && age.value !=""){
         let person = new Person(name.value, age.value, password.value);
-        console.log(person);
         // Lägg till personen i den statiska arrayen persons
         Person.persons.push(person)
         // Kalla på showPersons-funktionen för att skriva ut information om personerna
@@ -61,6 +57,7 @@ function showError(pId) {
     errorP.removeAttribute("hidden");
 }
 
+// Funktion för att skriva ut alla personers info
 function showPersons() {
     // rensa output
     document.getElementById('output').innerHTML = "";
@@ -71,6 +68,7 @@ function showPersons() {
     });
 }
 
+// Funktion för att kalla på metoden birthday
 function callBirthday(){
     document.getElementById('output').innerHTML = "";
     for(let person of Person.persons){
@@ -79,6 +77,11 @@ function callBirthday(){
     }
 }
 
+// Funktion för att kalla på klassmetoden greetings, så att alla personer hälsar på varandra.
 function callGreetings(){
-    
+    for(let personX of Person.persons){
+        for (let personY of Person.persons){
+            personX.greetings(personY);
+        }
+    }
 }

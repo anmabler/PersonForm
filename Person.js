@@ -26,14 +26,15 @@ class Person {
 
     }
 
-    greetings(otherPerson){
+    // Skriv ut ett hälsningsmeddelande
+    greetings(otherPerson){ 
         let greetDiv = document.getElementById("greetings");
-        Person.persons.forEach((person) => {
-            if (person != this){
-                greetDiv += `Hej ${person.name}. Mitt namn är ${this.name}`
-            }
-        })
+        if (this !== otherPerson){
+            greetDiv.innerHTML += `<p>Hej ${otherPerson.name}. Mitt namn är ${this.name}.</p>`
+        }
+
     }
+            
 
     
     
